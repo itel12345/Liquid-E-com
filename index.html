@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIQUID GLASS 2050 | Futuristischer E-Commerce</title>
+    <title>FLÜSSIGES GLAS 2050 | Futuristischer Einkauf</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Liquid Background -->
+    <!-- Flüssigkeitshintergrund -->
     <div class="liquid-background">
         <div class="water-layer"></div>
         <div class="liquid-droplets" id="droplets"></div>
     </div>
 
-    <!-- Frosted Glass Navigation -->
+    <!-- Mattglasnavigation -->
     <nav class="liquid-nav">
-        <div class="nav-logo">LIQUID GLASS 2050</div>
+        <div class="nav-logo">FLÜSSIGES GLAS 2050</div>
         
         <div class="nav-menu">
             <a href="#home" class="nav-item active">
                 <i class="fas fa-home"></i>
                 <span>Startseite</span>
             </a>
-            <a href="#products" class="nav-item">
+            <a href="#produkte" class="nav-item">
                 <i class="fas fa-cube"></i>
                 <span>Produkte</span>
             </a>
-            <a href="#new" class="nav-item">
+            <a href="#neuheiten" class="nav-item">
                 <i class="fas fa-star"></i>
                 <span>Neuheiten</span>
             </a>
-            <a href="#tech" class="nav-item">
+            <a href="#technologie" class="nav-item">
                 <i class="fas fa-microchip"></i>
                 <span>Technologie</span>
             </a>
-            <a href="#contact" class="nav-item">
+            <a href="#kontakt" class="nav-item">
                 <i class="fas fa-comment"></i>
                 <span>Kontakt</span>
             </a>
@@ -52,9 +52,9 @@
         </div>
     </nav>
 
-    <!-- Color Selector -->
+    <!-- Farbauswahl -->
     <div class="color-selector" id="colorSelector">
-        <div class="color-title">NEON-FARBE WÄHLEN</div>
+        <div class="color-title">NEONFARBE WÄHLEN</div>
         
         <div class="color-option" style="background: #00f5d4;" data-color="#00f5d4" data-name="Türkis" data-rgb="0, 245, 212">
             <i class="fas fa-droplet"></i>
@@ -90,13 +90,13 @@
         </div>
     </div>
 
-    <!-- AR Overlay -->
+    <!-- AR-Überlagerung -->
     <div class="ar-overlay" id="arOverlay"></div>
 
-    <!-- AR Preview -->
+    <!-- AR-Vorschau -->
     <div class="ar-preview" id="arPreview">
         <div class="ar-header">
-            <h2 class="ar-title">AR PRODUCT PREVIEW</h2>
+            <h2 class="ar-title">AR PRODUKTVORSCHAU</h2>
             <button class="close-ar" id="closeAr">
                 <i class="fas fa-times"></i>
             </button>
@@ -105,30 +105,30 @@
             <div class="ar-placeholder">
                 <i class="fas fa-vr-cardboard ar-icon"></i>
                 <div class="ar-instructions" id="arInstructions">
-                    Scan your room to place the product in augmented reality
+                    Scannen Sie Ihren Raum, um das Produkt in erweiterter Realität zu platzieren
                 </div>
             </div>
             <div class="ar-controls">
                 <button class="ar-btn" id="arPlace">
-                    <i class="fas fa-cube"></i> Place in Room
+                    <i class="fas fa-cube"></i> Im Raum platzieren
                 </button>
                 <button class="ar-btn" id="arRotate">
-                    <i class="fas fa-sync-alt"></i> Rotate
+                    <i class="fas fa-sync-alt"></i> Drehen
                 </button>
                 <button class="ar-btn" id="arScale">
-                    <i class="fas fa-expand-alt"></i> Scale
+                    <i class="fas fa-expand-alt"></i> Skalieren
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Cart Overlay - BACKGROUND BLUR REMOVED -->
+    <!-- Warenkorb-Überlagerung -->
     <div class="cart-overlay" id="cartOverlay"></div>
 
-    <!-- Real Shopping Cart -->
+    <!-- Einkaufswagen -->
     <div class="shopping-cart" id="shoppingCart">
         <div class="cart-header">
-            <h2 class="cart-title">LIQUID WARENKORB</h2>
+            <h2 class="cart-title">FLÜSSIGER WARENKORB</h2>
             <button class="close-cart" id="closeCart">
                 <i class="fas fa-times"></i>
             </button>
@@ -136,7 +136,7 @@
         
         <div class="cart-content">
             <div class="cart-items" id="cartItems">
-                <!-- Cart items appear here -->
+                <!-- Warenkorbartikel erscheinen hier -->
             </div>
         </div>
         
@@ -144,7 +144,7 @@
             <div class="cart-summary">
                 <div class="summary-row">
                     <span>Zwischensumme:</span>
-                    <span id="cartSubtotal">$0.00</span>
+                    <span id="cartSubtotal">€0,00</span>
                 </div>
                 <div class="summary-row">
                     <span>Versand:</span>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="summary-row total-row">
                     <span>Gesamt:</span>
-                    <span class="total-amount" id="cartTotal">$0.00</span>
+                    <span class="total-amount" id="cartTotal">€0,00</span>
                 </div>
             </div>
             <button class="checkout-btn" id="checkoutBtn">
@@ -161,7 +161,7 @@
         </div>
     </div>
 
-    <!-- Control Panel -->
+    <!-- Steuerfeld -->
     <div class="control-panel">
         <button class="control-btn" id="colorControl">
             <i class="fas fa-palette"></i>
@@ -174,56 +174,56 @@
         </button>
     </div>
 
-    <!-- Glass Controls -->
+    <!-- Glassteuerungen -->
     <div class="glass-controls">
         <div class="control-group">
-            <label class="control-label">Glas-Unschärfe</label>
+            <label class="control-label">Glasunschärfe</label>
             <input type="range" min="0" max="40" step="1" value="15" class="custom-slider" id="blurSlider">
             <div class="control-value" id="blurValue">15px</div>
         </div>
         
         <div class="control-group">
-            <label class="control-label">Transparenz-Level</label>
+            <label class="control-label">Transparenzlevel</label>
             <input type="range" min="0.02" max="0.2" step="0.01" value="0.06" class="custom-slider" id="transparencySlider">
             <div class="control-value" id="transparencyValue">6%</div>
         </div>
         
         <div class="control-group">
-            <label class="control-label">Flüssigkeits-Intensität</label>
+            <label class="control-label">Flüssigkeitsintensität</label>
             <input type="range" min="0.1" max="1" step="0.1" value="0.8" class="custom-slider" id="liquidSlider">
-            <div class="control-value" id="liquidValue">Stark (0.8)</div>
+            <div class="control-value" id="liquidValue">Stark (0,8)</div>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Hauptinhalt -->
     <div class="main-content">
-        <!-- Hero Section -->
+        <!-- Heldenbereich -->
         <section class="hero" id="home">
-            <h1 class="hero-title">WAHRE LIQUID GLASS ERFAHRUNG</h1>
-            <p class="hero-subtitle">Erleben Sie das Einkaufen im Jahr 2050 mit unserer revolutionären matten Glasoberfläche. Beobachten Sie, wie Produkte mit fesselnden Flüssigkeitsanimationen und Glassmorphism-Effekten in Ihren Warenkorb fließen.</p>
-            <a href="#products" class="hero-button">
+            <h1 class="hero-title">ECHTE FLÜSSIGES-GLAS-ERFAHRUNG</h1>
+            <p class="hero-subtitle">Erleben Sie das Einkaufen im Jahr 2050 mit unserer revolutionären matten Glasoberfläche. Beobachten Sie, wie Produkte mit fesselnden Flüssigkeitsanimationen und Glas-Effekten in Ihren Warenkorb fließen.</p>
+            <a href="#produkte" class="hero-button">
                 <i class="fas fa-play-circle"></i> MIT DEM EINKAUFEN BEGINNEN
             </a>
         </section>
 
-        <!-- Products Section -->
-        <section id="products">
-            <h2 class="section-title">LIQUID PRODUKTE</h2>
+        <!-- Produktbereich -->
+        <section id="produkte">
+            <h2 class="section-title">FLÜSSIGE PRODUKTE</h2>
             <div class="products-grid" id="productsGrid">
-                <!-- Products loaded dynamically -->
+                <!-- Produkte werden dynamisch geladen -->
             </div>
         </section>
     </div>
 
-        <!-- Featured Products Section -->
+    <!-- Hervorgehobene Produkte -->
     <section class="featured-section" id="featured">
-        <h2 class="section-title">EMPFEHLENSWERTE PRODUKTE</h2>
+        <h2 class="section-title">EMPFOHLENE PRODUKTE</h2>
         <div class="featured-slider" id="featuredSlider">
-            <!-- Featured products will be dynamically loaded -->
+            <!-- Hervorgehobene Produkte werden dynamisch geladen -->
         </div>
     </section>
 
-    <!-- Newsletter Signup -->
+    <!-- Newsletter-Anmeldung -->
     <section class="newsletter-section">
         <div class="newsletter-container">
             <div class="newsletter-content">
@@ -245,11 +245,11 @@
         </div>
     </section>
 
-    <!-- Product Categories Section -->
+    <!-- Produktkategorien -->
     <section class="categories-section">
-        <h2 class="section-title">SHOPPEN NACH KATEGORIE</h2>
+        <h2 class="section-title">NACH KATEGORIE SHOPPEN</h2>
         <div class="categories-grid">
-            <div class="category-card" data-category="SMARTPHONE">
+            <div class="category-card" data-category="SMARTPHON">
                 <div class="category-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -263,11 +263,11 @@
                 <h3 class="category-title">Laptops</h3>
                 <p class="category-count">8 Produkte</p>
             </div>
-            <div class="category-card" data-category="WEARABLE">
+            <div class="category-card" data-category="TRAGBAR">
                 <div class="category-icon">
                     <i class="fas fa-clock"></i>
                 </div>
-                <h3 class="category-title">Wearables</h3>
+                <h3 class="category-title">Tragbare Geräte</h3>
                 <p class="category-count">15 Produkte</p>
             </div>
             <div class="category-card" data-category="AUDIO">
@@ -277,24 +277,24 @@
                 <h3 class="category-title">Audio</h3>
                 <p class="category-count">9 Produkte</p>
             </div>
-            <div class="category-card" data-category="SMART HOME">
+            <div class="category-card" data-category="SMARTES HAUS">
                 <div class="category-icon">
                     <i class="fas fa-home"></i>
                 </div>
-                <h3 class="category-title">Smart Home</h3>
+                <h3 class="category-title">Smartes Zuhause</h3>
                 <p class="category-count">7 Produkte</p>
             </div>
-            <div class="category-card" data-category="GAMING">
+            <div class="category-card" data-category="SPIELE">
                 <div class="category-icon">
                     <i class="fas fa-gamepad"></i>
                 </div>
-                <h3 class="category-title">Gaming</h3>
+                <h3 class="category-title">Spiele</h3>
                 <p class="category-count">11 Produkte</p>
             </div>
         </div>
     </section>
 
-    <!-- Product Filters -->
+    <!-- Produktfilter -->
     <div class="filters-container" id="filtersContainer">
         <div class="filter-group">
             <label class="filter-label">Sortieren nach:</label>
@@ -310,10 +310,10 @@
         <div class="filter-group">
             <label class="filter-label">Preisbereich:</label>
             <div class="price-range">
-                <span id="minPrice">$0</span>
+                <span id="minPrice">€0</span>
                 <input type="range" min="0" max="5000" value="0" class="range-slider" id="minRange">
                 <input type="range" min="0" max="5000" value="5000" class="range-slider" id="maxRange">
-                <span id="maxPrice">$5000</span>
+                <span id="maxPrice">€5000</span>
             </div>
         </div>
         <div class="filter-group">
@@ -326,27 +326,27 @@
         </div>
     </div>
 
-    <!-- Product Quick View Modal -->
+    <!-- Produkt-Schnellansicht -->
     <div class="quickview-overlay" id="quickviewOverlay"></div>
     <div class="quickview-modal" id="quickviewModal">
         <div class="quickview-content" id="quickviewContent">
-            <!-- Quick view content will be loaded dynamically -->
+            <!-- Schnellansicht-Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
-        <!-- LIQUID REALITY SHOWROOM -->
+    <!-- FLÜSSIGE REALITÄTS-AUSSTELLUNG -->
     <section class="reality-showroom" id="showroom">
         <div class="showroom-header">
-            <h2 class="section-title">LIQUID REALITY SHOWROOM</h2>
-            <p class="showroom-subtitle">Betreten Sie unseren interaktiven 3D-Showroom. Produkte fließen in realer Zeit durch den Raum.</p>
+            <h2 class="section-title">FLÜSSIGE REALITÄTS-AUSSTELLUNG</h2>
+            <p class="showroom-subtitle">Betreten Sie unseren interaktiven 3D-Ausstellungsraum. Produkte fließen in Echtzeit durch den Raum.</p>
         </div>
         
         <div class="showroom-container">
             <div class="showroom-canvas" id="showroomCanvas">
-                <!-- 3D Showroom will be rendered here -->
+                <!-- 3D-Ausstellung wird hier gerendert -->
                 <div class="showroom-placeholder">
                     <i class="fas fa-vr-cardboard"></i>
-                    <p>LIQUID REALITY SHOWROOM LÄDT...</p>
+                    <p>FLÜSSIGE REALITÄTS-AUSSTELLUNG LÄDT...</p>
                     <div class="loading-liquid">
                         <div class="liquid-loader"></div>
                         <div class="liquid-loader delay-1"></div>
@@ -357,20 +357,20 @@
             
             <div class="showroom-controls">
                 <div class="control-panel-3d">
-                    <h3>SHOWROOM KONTROLLE</h3>
+                    <h3>AUSSTELLUNGS-STEUERUNG</h3>
                     <div class="control-item">
                         <label>FLÜSSIGKEITS-MODUS</label>
                         <div class="mode-buttons">
                             <button class="mode-btn active" data-mode="flow">Fließend</button>
                             <button class="mode-btn" data-mode="hover">Schwebend</button>
-                            <button class="mode-btn" data-mode="dance">Tanzen</button>
+                            <button class="mode-btn" data-mode="dance">Tanzend</button>
                         </div>
                     </div>
                     
                     <div class="control-item">
                         <label>UMGEBUNGS-EFFEKTE</label>
                         <div class="effect-buttons">
-                            <button class="effect-btn active" data-effect="rain">Flüssig-Regen</button>
+                            <button class="effect-btn active" data-effect="rain">Flüssigkeits-Regen</button>
                             <button class="effect-btn" data-effect="nebula">Nebel-Effekt</button>
                             <button class="effect-btn" data-effect="hologram">Hologramm</button>
                         </div>
@@ -387,23 +387,23 @@
                 </div>
                 
                 <div class="showroom-products">
-                    <h3>SHOWROOM PRODUKTE</h3>
+                    <h3>AUSSTELLUNGSPRODUKTE</h3>
                     <div class="product-selector">
                         <div class="showroom-product" data-id="1">
-                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Phone">
-                            <span>Quantum Phone</span>
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Telefon">
+                            <span>Quanten-Telefon</span>
                         </div>
                         <div class="showroom-product" data-id="2">
                             <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Laptop">
-                            <span>Liquid Laptop</span>
+                            <span>Flüssiger Laptop</span>
                         </div>
                         <div class="showroom-product" data-id="5">
                             <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="VR">
-                            <span>Neural VR</span>
+                            <span>Neuronale VR</span>
                         </div>
                         <div class="showroom-product" data-id="8">
-                            <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Projector">
-                            <span>Holo Projector</span>
+                            <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Projektor">
+                            <span>Hologramm-Projektor</span>
                         </div>
                     </div>
                 </div>
@@ -412,18 +412,18 @@
         
         <div class="showroom-actions">
             <button class="action-btn" id="enterShowroom">
-                <i class="fas fa-door-open"></i> SHOWROOM BETRETEN
+                <i class="fas fa-door-open"></i> AUSSTELLUNG BETRETEN
             </button>
             <button class="action-btn secondary" id="resetShowroom">
                 <i class="fas fa-redo"></i> NEUSTART
             </button>
             <button class="action-btn tertiary" id="captureShowroom">
-                <i class="fas fa-camera"></i> 3D-SCREENSHOT
+                <i class="fas fa-camera"></i> 3D-BILDSCHIRMAUFNAHME
             </button>
         </div>
     </section>
 
-    <!-- AI PERSONAL SHOPPER -->
+    <!-- KI-PERSÖNLICHER EINKAUFSBERATER -->
     <section class="ai-shopper-section">
         <div class="ai-container">
             <div class="ai-interface">
@@ -438,7 +438,7 @@
                     </div>
                     <div class="ai-info">
                         <h3 class="ai-name">NEXA <span class="ai-version">v2.5</span></h3>
-                        <p class="ai-title">Liquid Glass AI Shopping Assistant</p>
+                        <p class="ai-title">Flüssiges Glas KI-Einkaufsassistent</p>
                         <div class="ai-status">
                             <span class="status-dot"></span>
                             <span class="status-text">Online & Bereit</span>
@@ -455,7 +455,7 @@
                     
                     <div class="user-message">
                         <div class="message-bubble user">
-                            <p>Zeigen Sie mir futuristische Gadgets unter $2000</p>
+                            <p>Zeigen Sie mir futuristische Geräte unter €2000</p>
                         </div>
                     </div>
                     
@@ -496,7 +496,7 @@
                     </div>
                     
                     <div class="quick-questions">
-                        <button class="quick-question" data-question="Was sind die neuesten Liquid Glass Produkte?">
+                        <button class="quick-question" data-question="Was sind die neuesten Flüssiges Glas Produkte?">
                             <i class="fas fa-star"></i> Neueste Produkte
                         </button>
                         <button class="quick-question" data-question="Empfehlen Sie mir etwas für Home Office">
@@ -510,9 +510,9 @@
             </div>
             
             <div class="ai-recommendations">
-                <h3 class="ai-rec-title">NEXA'S EMPFEHLUNGEN</h3>
+                <h3 class="ai-rec-title">NEXAS EMPFEHLUNGEN</h3>
                 <div class="rec-slider" id="recSlider">
-                    <!-- AI recommendations will appear here -->
+                    <!-- KI-Empfehlungen erscheinen hier -->
                 </div>
                 <div class="ai-stats">
                     <div class="stat-item">
@@ -520,7 +520,7 @@
                         <div class="stat-label">Zufriedenheit</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">2.4s</div>
+                        <div class="stat-value">2,4s</div>
                         <div class="stat-label">Antwortzeit</div>
                     </div>
                     <div class="stat-item">
@@ -532,11 +532,11 @@
         </div>
     </section>
 
-    <!-- PRODUCT DNA SCANNER -->
+    <!-- PRODUKT-DNA-SCANNER -->
     <section class="dna-scanner-section">
         <div class="dna-container">
             <div class="dna-header">
-                <h2 class="section-title">PRODUCT DNA SCANNER</h2>
+                <h2 class="section-title">PRODUKT-DNA-SCANNER</h2>
                 <p class="dna-subtitle">Scannen Sie jedes Gerät, um sein "technologisches DNA-Profil" zu entschlüsseln. Sehen Sie die inneren Flüssigkeitskomponenten in Echtzeit.</p>
             </div>
             
@@ -555,7 +555,7 @@
                     
                     <div class="product-preview">
                         <div class="product-3d" id="product3d">
-                            <!-- 3D product visualization -->
+                            <!-- 3D-Produktvisualisierung -->
                             <div class="dna-strand">
                                 <div class="strand-segment" style="--color: var(--primary-color);"></div>
                                 <div class="strand-segment" style="--color: var(--neon-blue);"></div>
@@ -570,7 +570,7 @@
                 
                 <div class="dna-results">
                     <div class="results-header">
-                        <h3>DNA-ANALYSE ERGEBNISSE</h3>
+                        <h3>DNA-ANALYSE-ERGEBNISSE</h3>
                         <div class="scan-progress">
                             <div class="progress-bar">
                                 <div class="progress-fill" id="dnaProgress"></div>
@@ -582,7 +582,7 @@
                     <div class="dna-metrics">
                         <div class="metric">
                             <div class="metric-header">
-                                <span class="metric-label">LIQUID CORE TEMPERATUR</span>
+                                <span class="metric-label">FLÜSSIGKEITS-KERN-TEMPERATUR</span>
                                 <span class="metric-value" id="tempMetric">-196°C</span>
                             </div>
                             <div class="metric-bar">
@@ -603,7 +603,7 @@
                         <div class="metric">
                             <div class="metric-header">
                                 <span class="metric-label">FLÜSSIGKEITS-INTELLIGENZ</span>
-                                <span class="metric-value" id="liquidMetric">AI Level 9</span>
+                                <span class="metric-value" id="liquidMetric">KI Level 9</span>
                             </div>
                             <div class="metric-bar">
                                 <div class="metric-fill" style="width: 92%; background: var(--neon-purple);"></div>
@@ -613,7 +613,7 @@
                         <div class="metric">
                             <div class="metric-header">
                                 <span class="metric-label">ENERGIE-EFFIZIENZ</span>
-                                <span class="metric-value" id="energyMetric">0.02W/h</span>
+                                <span class="metric-value" id="energyMetric">0,02W/h</span>
                             </div>
                             <div class="metric-bar">
                                 <div class="metric-fill" style="width: 78%; background: var(--neon-green);"></div>
@@ -626,7 +626,7 @@
                         <div class="signature-visual">
                             <canvas id="dnaSignature" width="400" height="100"></canvas>
                         </div>
-                        <p class="signature-code" id="dnaCode">LG2050-QUANT-9A3F-B7C2-1E8D</p>
+                        <p class="signature-code" id="dnaCode">FG2050-QUANT-9A3F-B7C2-1E8D</p>
                     </div>
                 </div>
             </div>
@@ -639,7 +639,7 @@
                     <i class="fas fa-balance-scale"></i> MIT ANDEREN VERGLEICHEN
                 </button>
                 <button class="scanner-btn" id="downloadDNA">
-                    <i class="fas fa-download"></i> DNA-PROFIL DOWNLOADEN
+                    <i class="fas fa-download"></i> DNA-PROFIL HERUNTERLADEN
                 </button>
             </div>
             
@@ -650,55 +650,56 @@
                         <div class="scannable-icon">
                             <i class="fas fa-atom"></i>
                         </div>
-                        <span>Quantum Phone</span>
+                        <span>Quanten-Telefon</span>
                         <div class="scannable-badge">DNA VERFÜGBAR</div>
                     </div>
                     <div class="scannable-product" data-product="liquid" data-id="2">
                         <div class="scannable-icon">
                             <i class="fas fa-tint"></i>
                         </div>
-                        <span>Liquid Laptop</span>
+                        <span>Flüssiger Laptop</span>
                         <div class="scannable-badge">DNA VERFÜGBAR</div>
                     </div>
                     <div class="scannable-product" data-product="neural" data-id="5">
                         <div class="scannable-icon">
                             <i class="fas fa-brain"></i>
                         </div>
-                        <span>Neural VR</span>
+                        <span>Neuronale VR</span>
                         <div class="scannable-badge">DNA VERFÜGBAR</div>
                     </div>
                     <div class="scannable-product" data-product="hologram" data-id="8">
                         <div class="scannable-icon">
                             <i class="fas fa-hologram"></i>
                         </div>
-                        <span>Holo Projector</span>
+                        <span>Hologramm-Projektor</span>
                         <div class="scannable-badge">DNA VERFÜGBAR</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-        <!-- MICRO INTERACTIONS -->
+
+    <!-- MIKROINTERAKTIONEN -->
     
-    <!-- Liquid Cursor Trail -->
+    <!-- Flüssiger Mauszeigerpfad -->
     <div class="cursor-trail" id="cursorTrail"></div>
     
-    <!-- Secret Lab Access -->
+    <!-- Geheimes Labor -->
     <div class="secret-lab" id="secretLab">
         <div class="lab-door">
             <div class="lab-interface">
-                <h3>⚗️ LIQUID LAB 2050</h3>
-                <p class="lab-subtitle">SECRET DEVELOPER MODE ACTIVATED</p>
+                <h3>⚗️ FLÜSSIGES LABOR 2050</h3>
+                <p class="lab-subtitle">GEHEIMER ENTWICKLERMODUS AKTIVIERT</p>
                 
                 <div class="lab-controls">
                     <div class="lab-slider">
-                        <label>GRAVITY MULTIPLIER</label>
+                        <label>GRAVITÄTSMULTIPLIKATOR</label>
                         <input type="range" min="0.1" max="3" step="0.1" value="1" id="gravitySlider">
-                        <span id="gravityValue">1.0x</span>
+                        <span id="gravityValue">1,0x</span>
                     </div>
                     
                     <div class="lab-toggle">
-                        <label>LIQUID PHYSICS</label>
+                        <label>FLÜSSIGKEITSPHYSIK</label>
                         <label class="switch">
                             <input type="checkbox" id="physicsToggle" checked>
                             <span class="slider"></span>
@@ -707,28 +708,28 @@
                     
                     <div class="lab-buttons">
                         <button class="lab-btn" id="liquidStorm">
-                            <i class="fas fa-bolt"></i> Liquid Storm
+                            <i class="fas fa-bolt"></i> Flüssigkeitssturm
                         </button>
                         <button class="lab-btn" id="matrixRain">
-                            <i class="fas fa-code"></i> Matrix Mode
+                            <i class="fas fa-code"></i> Matrix-Modus
                         </button>
                         <button class="lab-btn" id="resetAll">
-                            <i class="fas fa-undo"></i> Reset
+                            <i class="fas fa-undo"></i> Zurücksetzen
                         </button>
                     </div>
                 </div>
                 
                 <div class="lab-stats">
                     <div class="stat">
-                        <span class="stat-label">DROPLETS ACTIVE</span>
+                        <span class="stat-label">AKTIVE TROPFEN</span>
                         <span class="stat-value" id="dropletCount">0</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label">LIQUID FLOW</span>
-                        <span class="stat-value" id="flowRate">0.8 m/s</span>
+                        <span class="stat-label">FLÜSSIGKEITSFLUSS</span>
+                        <span class="stat-value" id="flowRate">0,8 m/s</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-label">TEMPERATURE</span>
+                        <span class="stat-label">TEMPERATUR</span>
                         <span class="stat-value" id="labTemp">-196°C</span>
                     </div>
                 </div>
@@ -736,13 +737,13 @@
         </div>
     </div>
     
-    <!-- Easter Egg: Secret Konami Code -->
+    <!-- Osterei: Geheimer Konami-Code -->
     <div class="konami-notification" id="konamiNotification">
         <i class="fas fa-chess-queen"></i>
-        <span>SECRET MODE UNLOCKED!</span>
+        <span>GEHEIMER MODUS FREIGESCHALTET!</span>
     </div>
     
-    <!-- Quantum Loading Bar -->
+    <!-- Quantenladebalken -->
     <div class="quantum-loader" id="quantumLoader">
         <div class="quantum-dots">
             <div class="qdot" style="--delay: 0"></div>
@@ -751,10 +752,10 @@
             <div class="qdot" style="--delay: 0.3"></div>
             <div class="qdot" style="--delay: 0.4"></div>
         </div>
-        <div class="loader-text">QUANTUM LOADING...</div>
+        <div class="loader-text">QUANTENLADUNG...</div>
     </div>
     
-    <!-- Micro Cart Animation -->
+    <!-- Mikro-Warenkorb-Animation -->
     <div class="micro-cart-animation" id="microCart">
         <div class="cart-burst">
             <div class="burst-particle"></div>
@@ -765,7 +766,7 @@
         </div>
     </div>
     
-    <!-- Ambient Sound Toggle -->
+    <!-- Umgebungsgeräusch-Umschalter -->
     <div class="sound-toggle" id="soundToggle">
         <i class="fas fa-volume-up"></i>
         <div class="sound-wave">
@@ -777,7 +778,7 @@
         </div>
     </div>
     
-    <!-- Time Travel Button -->
+    <!-- Zeitreise-Knopf -->
     <div class="time-travel" id="timeTravel">
         <div class="time-button">
             <i class="fas fa-hourglass-half"></i>
@@ -785,18 +786,19 @@
         </div>
     </div>
     
-    <!-- Liquid Typing Effect -->
+    <!-- Flüssiges Tippeffekt -->
     <div class="liquid-typing" id="liquidTyping">
         <div class="typing-container">
             <span class="typing-text"></span>
             <span class="typing-cursor">|</span>
         </div>
     </div>
-    <!-- Footer -->
+
+    <!-- Fußzeile -->
     <footer class="liquid-footer">
         <div class="footer-container">
             <div class="footer-section">
-                <h3 class="footer-title">LIQUID GLASS 2050</h3>
+                <h3 class="footer-title">FLÜSSIGES GLAS 2050</h3>
                 <p class="footer-description">Die Zukunft des Einkaufens ist hier. Erleben Sie Technologie von morgen, heute.</p>
                 <div class="social-links">
                     <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -831,13 +833,13 @@
                     <li><a href="#">Kundenservice</a></li>
                     <li><a href="#">Versand & Lieferung</a></li>
                     <li><a href="#">Rückgaben & Umtausch</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Häufige Fragen</a></li>
                     <li><a href="#">Kontakt</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 LIQUID GLASS 2050. Alle Rechte vorbehalten.</p>
+            <p>&copy; 2024 FLÜSSIGES GLAS 2050. Alle Rechte vorbehalten.</p>
             <div class="footer-legal">
                 <a href="#">Datenschutz</a>
                 <a href="#">Nutzungsbedingungen</a>
@@ -847,7 +849,7 @@
         </div>
     </footer>
 
-    <!-- Floating Action Buttons -->
+    <!-- Schwebeaktionen-Knöpfe -->
     <div class="floating-actions">
         <button class="floating-btn" id="scrollToTop">
             <i class="fas fa-arrow-up"></i>
@@ -857,39 +859,14 @@
         </button>
     </div>
 
-    <!-- Stock Availability Indicator -->
+    <!-- Lagerbestandsanzeige -->
     <div class="stock-indicator" id="stockIndicator">
         <div class="stock-bar">
             <div class="stock-fill" id="stockFill"></div>
         </div>
         <span class="stock-text" id="stockText">Nur noch 5 verfügbar!</span>
-    </div> 
+    </div>
 
-    <!-- Add this with your other audio elements -->
-<audio id="ambientSound" loop>
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-ambience-loop-156.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="liquidFlowSound" loop>
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-water-flow-loop-103.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="techSound" loop>
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-futuristic-technology-loop-121.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="hologramSound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-hologram-open-1167.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="cartAddSound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-electronic-retro-block-hit-2185.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="selectionSound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-tech-drop-3278.mp3" type="audio/mpeg">
-</audio>
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>

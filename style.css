@@ -4453,3 +4453,125 @@ body.color-selector-open {
         width: 160px;
     }
 }
+/* Sound Unlock System */
+.sound-unlock-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.sound-unlock-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.sound-unlock-modal {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    transform: translateY(30px);
+    transition: transform 0.5s ease;
+}
+
+.sound-unlock-overlay.active .sound-unlock-modal {
+    transform: translateY(0);
+}
+
+.sound-unlock-icon {
+    width: 100px;
+    height: 100px;
+    background: rgba(var(--primary-rgb), 0.1);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    border: 2px solid var(--primary-color);
+}
+
+.sound-unlock-icon i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.sound-unlock-modal h3 {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.sound-unlock-modal p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.sound-unlock-btn {
+    padding: 15px 40px;
+    background: rgba(var(--primary-rgb), 0.3);
+    border: 1px solid var(--primary-color);
+    border-radius: 25px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto 15px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.sound-unlock-btn:hover {
+    background: rgba(var(--primary-rgb), 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.3);
+}
+
+.sound-skip-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: var(--transition-medium);
+}
+
+.sound-skip-btn:hover {
+    color: white;
+}
+
+/* Update existing sound toggle */
+.sound-toggle {
+    cursor: pointer;
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(var(--neon-blue-rgb), 0.3); }
+    50% { box-shadow: 0 0 20px rgba(var(--neon-blue-rgb), 0.6); }
+}
