@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIQUID GLASS 2050 | Futuristischer E-Commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Liquid Background -->
+    <div class="liquid-background">
+        <div class="water-layer"></div>
+        <div class="liquid-droplets" id="droplets"></div>
+    </div>
+
+    <!-- Frosted Glass Navigation -->
+    <nav class="liquid-nav">
+        <div class="nav-logo">LIQUID GLASS 2050</div>
+        
+        <div class="nav-menu">
+            <a href="#home" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Startseite</span>
+            </a>
+            <a href="#products" class="nav-item">
+                <i class="fas fa-cube"></i>
+                <span>Produkte</span>
+            </a>
+            <a href="#new" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Neuheiten</span>
+            </a>
+            <a href="#tech" class="nav-item">
+                <i class="fas fa-microchip"></i>
+                <span>Technologie</span>
+            </a>
+            <a href="#contact" class="nav-item">
+                <i class="fas fa-comment"></i>
+                <span>Kontakt</span>
+            </a>
+        </div>
+        
+        <div class="nav-icons">
+            <div class="nav-icon" id="cartButton">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <div class="nav-icon" id="colorButton">
+                <i class="fas fa-palette"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Color Selector -->
+    <div class="color-selector" id="colorSelector">
+        <div class="color-title">NEON-FARBE WÄHLEN</div>
+        
+        <div class="color-option" style="background: #00f5d4;" data-color="#00f5d4" data-name="Türkis" data-rgb="0, 245, 212">
+            <i class="fas fa-droplet"></i>
+        </div>
+        <div class="color-option" style="background: #00bbf9;" data-color="#00bbf9" data-name="Blau" data-rgb="0, 187, 249">
+            <i class="fas fa-water"></i>
+        </div>
+        <div class="color-option" style="background: #ff006e;" data-color="#ff006e" data-name="Pink" data-rgb="255, 0, 110">
+            <i class="fas fa-heart"></i>
+        </div>
+        <div class="color-option" style="background: #8338ec;" data-color="#8338ec" data-name="Lila" data-rgb="131, 56, 236">
+            <i class="fas fa-gem"></i>
+        </div>
+        
+        <div class="color-option" style="background: #38b000;" data-color="#38b000" data-name="Grün" data-rgb="56, 176, 0">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="color-option" style="background: #ffbe0b;" data-color="#ffbe0b" data-name="Gelb" data-rgb="255, 190, 11">
+            <i class="fas fa-sun"></i>
+        </div>
+        <div class="color-option" style="background: #fb5607;" data-color="#fb5607" data-name="Orange" data-rgb="251, 86, 7">
+            <i class="fas fa-fire"></i>
+        </div>
+        <div class="color-option" style="background: #ffffff; color: #333;" data-color="#ffffff" data-name="Weiß" data-rgb="255, 255, 255">
+            <i class="fas fa-snowflake"></i>
+        </div>
+        
+        <div class="color-option" style="background: linear-gradient(45deg, #ff0000, #ff9900, #ffff00, #00ff00, #0099ff, #6600ff);" data-color="rainbow" data-name="Regenbogen">
+            <i class="fas fa-rainbow"></i>
+        </div>
+        <div class="color-option" style="background: linear-gradient(45deg, #00f5d4, #00bbf9, #8338ec);" data-color="gradient" data-name="Verlauf">
+            <i class="fas fa-sliders-h"></i>
+        </div>
+    </div>
+
+    <!-- AR Overlay -->
+    <div class="ar-overlay" id="arOverlay"></div>
+
+    <!-- AR Preview -->
+    <div class="ar-preview" id="arPreview">
+        <div class="ar-header">
+            <h2 class="ar-title">AR PRODUCT PREVIEW</h2>
+            <button class="close-ar" id="closeAr">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ar-content">
+            <div class="ar-placeholder">
+                <i class="fas fa-vr-cardboard ar-icon"></i>
+                <div class="ar-instructions" id="arInstructions">
+                    Scan your room to place the product in augmented reality
+                </div>
+            </div>
+            <div class="ar-controls">
+                <button class="ar-btn" id="arPlace">
+                    <i class="fas fa-cube"></i> Place in Room
+                </button>
+                <button class="ar-btn" id="arRotate">
+                    <i class="fas fa-sync-alt"></i> Rotate
+                </button>
+                <button class="ar-btn" id="arScale">
+                    <i class="fas fa-expand-alt"></i> Scale
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Overlay - BACKGROUND BLUR REMOVED -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Real Shopping Cart -->
+    <div class="shopping-cart" id="shoppingCart">
+        <div class="cart-header">
+            <h2 class="cart-title">LIQUID WARENKORB</h2>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-content">
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items appear here -->
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Zwischensumme:</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Versand:</span>
+                    <span>KOSTENLOS</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Gesamt:</span>
+                    <span class="total-amount" id="cartTotal">$0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">
+                <i class="fas fa-bolt"></i> JETZT KASSIEREN
+            </button>
+        </div>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <button class="control-btn" id="colorControl">
+            <i class="fas fa-palette"></i>
+        </button>
+        <button class="control-btn" id="fontIncrease">
+            <i class="fas fa-text-height"></i>+
+        </button>
+        <button class="control-btn" id="fontDecrease">
+            <i class="fas fa-text-height"></i>-
+        </button>
+    </div>
+
+    <!-- Glass Controls -->
+    <div class="glass-controls">
+        <div class="control-group">
+            <label class="control-label">Glas-Unschärfe</label>
+            <input type="range" min="0" max="40" step="1" value="15" class="custom-slider" id="blurSlider">
+            <div class="control-value" id="blurValue">15px</div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">Transparenz-Level</label>
+            <input type="range" min="0.02" max="0.2" step="0.01" value="0.06" class="custom-slider" id="transparencySlider">
+            <div class="control-value" id="transparencyValue">6%</div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">Flüssigkeits-Intensität</label>
+            <input type="range" min="0.1" max="1" step="0.1" value="0.8" class="custom-slider" id="liquidSlider">
+            <div class="control-value" id="liquidValue">Stark (0.8)</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1 class="hero-title">WAHRE LIQUID GLASS ERFAHRUNG</h1>
+            <p class="hero-subtitle">Erleben Sie das Einkaufen im Jahr 2050 mit unserer revolutionären matten Glasoberfläche. Beobachten Sie, wie Produkte mit fesselnden Flüssigkeitsanimationen und Glassmorphism-Effekten in Ihren Warenkorb fließen.</p>
+            <a href="#products" class="hero-button">
+                <i class="fas fa-play-circle"></i> MIT DEM EINKAUFEN BEGINNEN
+            </a>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products">
+            <h2 class="section-title">LIQUID PRODUKTE</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products loaded dynamically -->
+            </div>
+        </section>
+    </div>
+
+        <!-- Featured Products Section -->
+    <section class="featured-section" id="featured">
+        <h2 class="section-title">EMPFEHLENSWERTE PRODUKTE</h2>
+        <div class="featured-slider" id="featuredSlider">
+            <!-- Featured products will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <div class="newsletter-content">
+                <h2 class="newsletter-title">NEUESTE TRENDS ERHALTEN</h2>
+                <p class="newsletter-subtitle">Erhalten Sie exklusive Einblicke in zukünftige Technologien und Sonderangebote</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Ihre E-Mail-Adresse" required class="newsletter-input">
+                        <button type="submit" class="newsletter-button">
+                            <i class="fas fa-paper-plane"></i> ABONNIEREN
+                        </button>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="privacyCheck" required>
+                        <label for="privacyCheck">Ich stimme den Datenschutzbestimmungen zu</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Section -->
+    <section class="categories-section">
+        <h2 class="section-title">SHOPPEN NACH KATEGORIE</h2>
+        <div class="categories-grid">
+            <div class="category-card" data-category="SMARTPHONE">
+                <div class="category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="category-title">Smartphones</h3>
+                <p class="category-count">12 Produkte</p>
+            </div>
+            <div class="category-card" data-category="LAPTOP">
+                <div class="category-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3 class="category-title">Laptops</h3>
+                <p class="category-count">8 Produkte</p>
+            </div>
+            <div class="category-card" data-category="WEARABLE">
+                <div class="category-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="category-title">Wearables</h3>
+                <p class="category-count">15 Produkte</p>
+            </div>
+            <div class="category-card" data-category="AUDIO">
+                <div class="category-icon">
+                    <i class="fas fa-headphones"></i>
+                </div>
+                <h3 class="category-title">Audio</h3>
+                <p class="category-count">9 Produkte</p>
+            </div>
+            <div class="category-card" data-category="SMART HOME">
+                <div class="category-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3 class="category-title">Smart Home</h3>
+                <p class="category-count">7 Produkte</p>
+            </div>
+            <div class="category-card" data-category="GAMING">
+                <div class="category-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="category-title">Gaming</h3>
+                <p class="category-count">11 Produkte</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Filters -->
+    <div class="filters-container" id="filtersContainer">
+        <div class="filter-group">
+            <label class="filter-label">Sortieren nach:</label>
+            <select class="filter-select" id="sortSelect">
+                <option value="default">Empfohlen</option>
+                <option value="price-asc">Preis: Niedrig zu Hoch</option>
+                <option value="price-desc">Preis: Hoch zu Niedrig</option>
+                <option value="name-asc">Name: A-Z</option>
+                <option value="name-desc">Name: Z-A</option>
+                <option value="newest">Neueste</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Preisbereich:</label>
+            <div class="price-range">
+                <span id="minPrice">$0</span>
+                <input type="range" min="0" max="5000" value="0" class="range-slider" id="minRange">
+                <input type="range" min="0" max="5000" value="5000" class="range-slider" id="maxRange">
+                <span id="maxPrice">$5000</span>
+            </div>
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn" id="applyFilters">
+                <i class="fas fa-filter"></i> Filter anwenden
+            </button>
+            <button class="filter-btn reset" id="resetFilters">
+                <i class="fas fa-redo"></i> Zurücksetzen
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Quick View Modal -->
+    <div class="quickview-overlay" id="quickviewOverlay"></div>
+    <div class="quickview-modal" id="quickviewModal">
+        <div class="quickview-content" id="quickviewContent">
+            <!-- Quick view content will be loaded dynamically -->
+        </div>
+    </div>
+
+        <!-- LIQUID REALITY SHOWROOM -->
+    <section class="reality-showroom" id="showroom">
+        <div class="showroom-header">
+            <h2 class="section-title">LIQUID REALITY SHOWROOM</h2>
+            <p class="showroom-subtitle">Betreten Sie unseren interaktiven 3D-Showroom. Produkte fließen in realer Zeit durch den Raum.</p>
+        </div>
+        
+        <div class="showroom-container">
+            <div class="showroom-canvas" id="showroomCanvas">
+                <!-- 3D Showroom will be rendered here -->
+                <div class="showroom-placeholder">
+                    <i class="fas fa-vr-cardboard"></i>
+                    <p>LIQUID REALITY SHOWROOM LÄDT...</p>
+                    <div class="loading-liquid">
+                        <div class="liquid-loader"></div>
+                        <div class="liquid-loader delay-1"></div>
+                        <div class="liquid-loader delay-2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showroom-controls">
+                <div class="control-panel-3d">
+                    <h3>SHOWROOM KONTROLLE</h3>
+                    <div class="control-item">
+                        <label>FLÜSSIGKEITS-MODUS</label>
+                        <div class="mode-buttons">
+                            <button class="mode-btn active" data-mode="flow">Fließend</button>
+                            <button class="mode-btn" data-mode="hover">Schwebend</button>
+                            <button class="mode-btn" data-mode="dance">Tanzen</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-item">
+                        <label>UMGEBUNGS-EFFEKTE</label>
+                        <div class="effect-buttons">
+                            <button class="effect-btn active" data-effect="rain">Flüssig-Regen</button>
+                            <button class="effect-btn" data-effect="nebula">Nebel-Effekt</button>
+                            <button class="effect-btn" data-effect="hologram">Hologramm</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-item">
+                        <label>PRODUKT-TEMPERATUR</label>
+                        <input type="range" min="0" max="100" value="50" class="temp-slider" id="tempSlider">
+                        <div class="temp-display">
+                            <span class="temp-value" id="tempValue">50°C</span>
+                            <span class="temp-status">Glühend</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="showroom-products">
+                    <h3>SHOWROOM PRODUKTE</h3>
+                    <div class="product-selector">
+                        <div class="showroom-product" data-id="1">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Phone">
+                            <span>Quantum Phone</span>
+                        </div>
+                        <div class="showroom-product" data-id="2">
+                            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Laptop">
+                            <span>Liquid Laptop</span>
+                        </div>
+                        <div class="showroom-product" data-id="5">
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="VR">
+                            <span>Neural VR</span>
+                        </div>
+                        <div class="showroom-product" data-id="8">
+                            <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Projector">
+                            <span>Holo Projector</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="showroom-actions">
+            <button class="action-btn" id="enterShowroom">
+                <i class="fas fa-door-open"></i> SHOWROOM BETRETEN
+            </button>
+            <button class="action-btn secondary" id="resetShowroom">
+                <i class="fas fa-redo"></i> NEUSTART
+            </button>
+            <button class="action-btn tertiary" id="captureShowroom">
+                <i class="fas fa-camera"></i> 3D-SCREENSHOT
+            </button>
+        </div>
+    </section>
+
+    <!-- AI PERSONAL SHOPPER -->
+    <section class="ai-shopper-section">
+        <div class="ai-container">
+            <div class="ai-interface">
+                <div class="ai-header">
+                    <div class="ai-avatar">
+                        <div class="ai-liquid-avatar">
+                            <div class="liquid-face"></div>
+                            <div class="liquid-face eye-left"></div>
+                            <div class="liquid-face eye-right"></div>
+                            <div class="liquid-face mouth"></div>
+                        </div>
+                    </div>
+                    <div class="ai-info">
+                        <h3 class="ai-name">NEXA <span class="ai-version">v2.5</span></h3>
+                        <p class="ai-title">Liquid Glass AI Shopping Assistant</p>
+                        <div class="ai-status">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Online & Bereit</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-chat" id="aiChat">
+                    <div class="ai-message">
+                        <div class="message-bubble ai">
+                            <p>Hallo! Ich bin Nexa, Ihr persönlicher KI-Einkaufsassistent. Ich kann Ihnen helfen, perfekte Produkte basierend auf Ihrer Stimmung, Ihrem Budget und Ihren Vorlieben zu finden.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="user-message">
+                        <div class="message-bubble user">
+                            <p>Zeigen Sie mir futuristische Gadgets unter $2000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-message">
+                        <div class="message-bubble ai">
+                            <p>Perfekt! Basierend auf Ihren Kriterien habe ich 7 passende Produkte gefunden. Möchten Sie nach Stimmung, Technologie oder Design filtern?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-input-container">
+                    <div class="mood-selector">
+                        <span class="mood-label">STIMMUNG:</span>
+                        <div class="mood-options">
+                            <button class="mood-option" data-mood="futuristic">
+                                <i class="fas fa-rocket"></i> Futuristisch
+                            </button>
+                            <button class="mood-option" data-mood="minimalist">
+                                <i class="fas fa-minus"></i> Minimalistisch
+                            </button>
+                            <button class="mood-option active" data-mood="luxury">
+                                <i class="fas fa-gem"></i> Luxuriös
+                            </button>
+                            <button class="mood-option" data-mood="gaming">
+                                <i class="fas fa-gamepad"></i> Gaming
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-input-group">
+                        <input type="text" 
+                               class="ai-input" 
+                               id="aiInput"
+                               placeholder="Fragen Sie Nexa nach personalisierten Empfehlungen...">
+                        <button class="ai-send" id="aiSend">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="quick-questions">
+                        <button class="quick-question" data-question="Was sind die neuesten Liquid Glass Produkte?">
+                            <i class="fas fa-star"></i> Neueste Produkte
+                        </button>
+                        <button class="quick-question" data-question="Empfehlen Sie mir etwas für Home Office">
+                            <i class="fas fa-home"></i> Home Office
+                        </button>
+                        <button class="quick-question" data-question="Zeigen Sie mir Gaming-Ausrüstung">
+                            <i class="fas fa-gamepad"></i> Gaming
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-recommendations">
+                <h3 class="ai-rec-title">NEXA'S EMPFEHLUNGEN</h3>
+                <div class="rec-slider" id="recSlider">
+                    <!-- AI recommendations will appear here -->
+                </div>
+                <div class="ai-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">97%</div>
+                        <div class="stat-label">Zufriedenheit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2.4s</div>
+                        <div class="stat-label">Antwortzeit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15K+</div>
+                        <div class="stat-label">Beratungen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT DNA SCANNER -->
+    <section class="dna-scanner-section">
+        <div class="dna-container">
+            <div class="dna-header">
+                <h2 class="section-title">PRODUCT DNA SCANNER</h2>
+                <p class="dna-subtitle">Scannen Sie jedes Gerät, um sein "technologisches DNA-Profil" zu entschlüsseln. Sehen Sie die inneren Flüssigkeitskomponenten in Echtzeit.</p>
+            </div>
+            
+            <div class="dna-scanner">
+                <div class="scanner-visual">
+                    <div class="scanner-circle">
+                        <div class="scanner-ring">
+                            <div class="ring-inner"></div>
+                            <div class="ring-outer"></div>
+                        </div>
+                        <div class="scanner-center">
+                            <i class="fas fa-dna scanner-icon"></i>
+                            <div class="scanner-beam"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-preview">
+                        <div class="product-3d" id="product3d">
+                            <!-- 3D product visualization -->
+                            <div class="dna-strand">
+                                <div class="strand-segment" style="--color: var(--primary-color);"></div>
+                                <div class="strand-segment" style="--color: var(--neon-blue);"></div>
+                                <div class="strand-segment" style="--color: var(--neon-pink);"></div>
+                                <div class="strand-segment" style="--color: var(--neon-purple);"></div>
+                                <div class="strand-segment" style="--color: var(--primary-color);"></div>
+                                <div class="strand-segment" style="--color: var(--neon-green);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dna-results">
+                    <div class="results-header">
+                        <h3>DNA-ANALYSE ERGEBNISSE</h3>
+                        <div class="scan-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="dnaProgress"></div>
+                            </div>
+                            <span class="progress-text" id="dnaProgressText">Scanne... 45%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dna-metrics">
+                        <div class="metric">
+                            <div class="metric-header">
+                                <span class="metric-label">LIQUID CORE TEMPERATUR</span>
+                                <span class="metric-value" id="tempMetric">-196°C</span>
+                            </div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 15%; background: var(--neon-blue);"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric">
+                            <div class="metric-header">
+                                <span class="metric-label">QUANTENPROZESSOR</span>
+                                <span class="metric-value" id="quantumMetric">128 Qubits</span>
+                            </div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 85%; background: var(--primary-color);"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric">
+                            <div class="metric-header">
+                                <span class="metric-label">FLÜSSIGKEITS-INTELLIGENZ</span>
+                                <span class="metric-value" id="liquidMetric">AI Level 9</span>
+                            </div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 92%; background: var(--neon-purple);"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric">
+                            <div class="metric-header">
+                                <span class="metric-label">ENERGIE-EFFIZIENZ</span>
+                                <span class="metric-value" id="energyMetric">0.02W/h</span>
+                            </div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 78%; background: var(--neon-green);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dna-signature">
+                        <h4>TECHNOLOGIE-DNA-SIGNATUR</h4>
+                        <div class="signature-visual">
+                            <canvas id="dnaSignature" width="400" height="100"></canvas>
+                        </div>
+                        <p class="signature-code" id="dnaCode">LG2050-QUANT-9A3F-B7C2-1E8D</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scanner-controls">
+                <button class="scanner-btn primary" id="startScan">
+                    <i class="fas fa-play"></i> DNA-SCAN STARTEN
+                </button>
+                <button class="scanner-btn" id="compareDNA">
+                    <i class="fas fa-balance-scale"></i> MIT ANDEREN VERGLEICHEN
+                </button>
+                <button class="scanner-btn" id="downloadDNA">
+                    <i class="fas fa-download"></i> DNA-PROFIL DOWNLOADEN
+                </button>
+            </div>
+            
+            <div class="dna-products">
+                <h3>SCANNFÄHIGE PRODUKTE</h3>
+                <div class="scannable-grid">
+                    <div class="scannable-product" data-product="quantum" data-id="1">
+                        <div class="scannable-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <span>Quantum Phone</span>
+                        <div class="scannable-badge">DNA VERFÜGBAR</div>
+                    </div>
+                    <div class="scannable-product" data-product="liquid" data-id="2">
+                        <div class="scannable-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <span>Liquid Laptop</span>
+                        <div class="scannable-badge">DNA VERFÜGBAR</div>
+                    </div>
+                    <div class="scannable-product" data-product="neural" data-id="5">
+                        <div class="scannable-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <span>Neural VR</span>
+                        <div class="scannable-badge">DNA VERFÜGBAR</div>
+                    </div>
+                    <div class="scannable-product" data-product="hologram" data-id="8">
+                        <div class="scannable-icon">
+                            <i class="fas fa-hologram"></i>
+                        </div>
+                        <span>Holo Projector</span>
+                        <div class="scannable-badge">DNA VERFÜGBAR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <!-- MICRO INTERACTIONS -->
+    
+    <!-- Liquid Cursor Trail -->
+    <div class="cursor-trail" id="cursorTrail"></div>
+    
+    <!-- Secret Lab Access -->
+    <div class="secret-lab" id="secretLab">
+        <div class="lab-door">
+            <div class="lab-interface">
+                <h3>⚗️ LIQUID LAB 2050</h3>
+                <p class="lab-subtitle">SECRET DEVELOPER MODE ACTIVATED</p>
+                
+                <div class="lab-controls">
+                    <div class="lab-slider">
+                        <label>GRAVITY MULTIPLIER</label>
+                        <input type="range" min="0.1" max="3" step="0.1" value="1" id="gravitySlider">
+                        <span id="gravityValue">1.0x</span>
+                    </div>
+                    
+                    <div class="lab-toggle">
+                        <label>LIQUID PHYSICS</label>
+                        <label class="switch">
+                            <input type="checkbox" id="physicsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="lab-buttons">
+                        <button class="lab-btn" id="liquidStorm">
+                            <i class="fas fa-bolt"></i> Liquid Storm
+                        </button>
+                        <button class="lab-btn" id="matrixRain">
+                            <i class="fas fa-code"></i> Matrix Mode
+                        </button>
+                        <button class="lab-btn" id="resetAll">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="lab-stats">
+                    <div class="stat">
+                        <span class="stat-label">DROPLETS ACTIVE</span>
+                        <span class="stat-value" id="dropletCount">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">LIQUID FLOW</span>
+                        <span class="stat-value" id="flowRate">0.8 m/s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">TEMPERATURE</span>
+                        <span class="stat-value" id="labTemp">-196°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Easter Egg: Secret Konami Code -->
+    <div class="konami-notification" id="konamiNotification">
+        <i class="fas fa-chess-queen"></i>
+        <span>SECRET MODE UNLOCKED!</span>
+    </div>
+    
+    <!-- Quantum Loading Bar -->
+    <div class="quantum-loader" id="quantumLoader">
+        <div class="quantum-dots">
+            <div class="qdot" style="--delay: 0"></div>
+            <div class="qdot" style="--delay: 0.1"></div>
+            <div class="qdot" style="--delay: 0.2"></div>
+            <div class="qdot" style="--delay: 0.3"></div>
+            <div class="qdot" style="--delay: 0.4"></div>
+        </div>
+        <div class="loader-text">QUANTUM LOADING...</div>
+    </div>
+    
+    <!-- Micro Cart Animation -->
+    <div class="micro-cart-animation" id="microCart">
+        <div class="cart-burst">
+            <div class="burst-particle"></div>
+            <div class="burst-particle"></div>
+            <div class="burst-particle"></div>
+            <div class="burst-particle"></div>
+            <div class="burst-particle"></div>
+        </div>
+    </div>
+    
+    <!-- Ambient Sound Toggle -->
+    <div class="sound-toggle" id="soundToggle">
+        <i class="fas fa-volume-up"></i>
+        <div class="sound-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Time Travel Button -->
+    <div class="time-travel" id="timeTravel">
+        <div class="time-button">
+            <i class="fas fa-hourglass-half"></i>
+            <span class="time-text">2050</span>
+        </div>
+    </div>
+    
+    <!-- Liquid Typing Effect -->
+    <div class="liquid-typing" id="liquidTyping">
+        <div class="typing-container">
+            <span class="typing-text"></span>
+            <span class="typing-cursor">|</span>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="liquid-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">LIQUID GLASS 2050</h3>
+                <p class="footer-description">Die Zukunft des Einkaufens ist hier. Erleben Sie Technologie von morgen, heute.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">SHOP</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Alle Produkte</a></li>
+                    <li><a href="#">Neue Ankünfte</a></li>
+                    <li><a href="#">Bestseller</a></li>
+                    <li><a href="#">Sonderangebote</a></li>
+                    <li><a href="#">AR-Vorschau</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">UNTERNEHMEN</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Über uns</a></li>
+                    <li><a href="#">Karriere</a></li>
+                    <li><a href="#">Nachhaltigkeit</a></li>
+                    <li><a href="#">Presse</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">HILFE</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Kundenservice</a></li>
+                    <li><a href="#">Versand & Lieferung</a></li>
+                    <li><a href="#">Rückgaben & Umtausch</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LIQUID GLASS 2050. Alle Rechte vorbehalten.</p>
+            <div class="footer-legal">
+                <a href="#">Datenschutz</a>
+                <a href="#">Nutzungsbedingungen</a>
+                <a href="#">Cookie-Richtlinie</a>
+                <a href="#">Impressum</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <button class="floating-btn" id="scrollToTop">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="floating-btn" id="quickSupport">
+            <i class="fas fa-comment-alt"></i>
+        </button>
+    </div>
+
+    <!-- Stock Availability Indicator -->
+    <div class="stock-indicator" id="stockIndicator">
+        <div class="stock-bar">
+            <div class="stock-fill" id="stockFill"></div>
+        </div>
+        <span class="stock-text" id="stockText">Nur noch 5 verfügbar!</span>
+    </div> 
+
+    
+<script src="script.js"></script>
+
+</body>
+</html>
