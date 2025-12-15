@@ -3456,7 +3456,7 @@
             }
         }
         /* ============================================
-   RESPONSIVE MOBILE FIRST STYLES
+   COMPLETE RESPONSIVE FIXES
    ============================================ */
 
 /* Mobile Navigation */
@@ -3557,8 +3557,100 @@
     margin-top: 40px;
 }
 
-/* Responsive Adjustments */
+/* FIX 1: RESPONSIVE PRODUCT IMAGES */
+.product-image {
+    width: 100%;
+    height: auto !important; /* Override fixed height */
+    aspect-ratio: 4/3; /* Maintain aspect ratio */
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease;
+}
+
+/* Featured product images */
+.featured-card .product-image {
+    height: 180px !important;
+    object-fit: cover;
+}
+
+/* Cart item images */
+.cart-item-image {
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Quick view images */
+.quickview-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+/* Showroom product images */
+.showroom-product img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Ensure all images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* FIX 2: MOBILE COLOR SELECTOR */
 @media (max-width: 1024px) {
+    /* Mobile Color Selector */
+    .color-selector {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(calc(100% + 20px));
+        width: 90%;
+        max-width: 320px;
+        padding: 15px;
+        z-index: 1100;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .color-selector.active {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateX(-50%) translateY(0);
+        bottom: 100px; /* Position above bottom navigation */
+    }
+    
+    .color-title {
+        grid-column: span 5;
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .color-option {
+        width: 45px;
+        height: 45px;
+        margin: 0 auto;
+    }
+    
     /* Hide desktop nav, show hamburger */
     .nav-menu {
         display: none;
@@ -3587,6 +3679,15 @@
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+    }
+    
+    .product-image {
+        aspect-ratio: 3/2;
+        max-height: 250px;
+    }
+    
+    .featured-card .product-image {
+        height: 150px !important;
     }
     
     /* Adjust categories grid */
@@ -3618,23 +3719,6 @@
     /* Hide Liquid Lab on mobile */
     .secret-lab {
         display: none !important;
-    }
-    
-    /* Make color selector mobile-friendly */
-    .color-selector {
-        width: 300px;
-        bottom: 80px;
-        right: 50%;
-        transform: translateX(50%) translateY(calc(100% + 40px));
-    }
-    
-    .color-selector.active {
-        transform: translateX(50%) translateY(0);
-    }
-    
-    .color-option {
-        width: 45px;
-        height: 45px;
     }
     
     /* Make controls touch-friendly */
@@ -3738,6 +3822,25 @@
     .products-grid {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+    
+    .product-image {
+        aspect-ratio: 16/9;
+        max-height: 200px;
+    }
+    
+    .featured-card .product-image {
+        height: 120px !important;
+    }
+    
+    .cart-item-image {
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px;
+    }
+    
+    .quickview-image img {
+        max-height: 300px;
     }
     
     /* Categories grid */
@@ -3897,6 +4000,20 @@
 
 @media (max-width: 480px) {
     /* Extra small devices */
+    .color-selector {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 280px;
+    }
+    
+    .color-title {
+        grid-column: span 4;
+    }
+    
+    .color-option {
+        width: 40px;
+        height: 40px;
+    }
+    
     .hero-title {
         font-size: calc(1.8rem * var(--font-scale)) !important;
     }
@@ -3907,6 +4024,21 @@
     
     .categories-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .product-image {
+        aspect-ratio: 1/1;
+        max-height: 180px;
+    }
+    
+    .featured-card .product-image {
+        height: 100px !important;
+    }
+    
+    .cart-item-image {
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px;
     }
     
     .product-selector {
@@ -3925,16 +4057,6 @@
         padding: 15px;
     }
     
-    /* Color selector for very small screens */
-    .color-selector {
-        width: 280px;
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .color-title {
-        grid-column: span 3;
-    }
-    
     /* Mobile menu items */
     .mobile-nav-item {
         font-size: 1.5rem;
@@ -3942,10 +4064,6 @@
     }
     
     /* Product cards */
-    .product-image {
-        height: 180px;
-    }
-    
     .product-title {
         font-size: calc(1.2rem * var(--font-scale));
     }
@@ -4018,6 +4136,11 @@
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
+    
+    /* Color option touch feedback */
+    .color-option:active {
+        transform: scale(0.9);
+    }
 }
 
 /* Landscape Mode Adjustments */
@@ -4058,6 +4181,12 @@
     .ai-chat {
         height: 200px;
     }
+    
+    /* Adjust color selector for landscape */
+    .color-selector {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
 }
 
 /* High Resolution Screens */
@@ -4075,57 +4204,39 @@
     }
 }
 
-/* Print Styles */
-@media print {
-    .liquid-nav,
-    .control-panel,
-    .glass-controls,
-    .color-selector,
-    .floating-actions,
-    .secret-lab,
-    .sound-toggle,
-    .time-travel {
-        display: none !important;
-    }
-    
-    body {
-        background: white !important;
-        color: black !important;
-    }
-    
-    .hero,
-    .product-card,
-    .featured-card {
-        border: 1px solid #ddd !important;
-        box-shadow: none !important;
-        background: white !important;
-    }
+/* Make sure color selector appears above everything on mobile */
+.color-selector {
+    z-index: 2000 !important;
 }
 
-/* Dark mode preference */
-@media (prefers-color-scheme: dark) {
-    /* Ensure dark mode compatibility */
-    :root {
-        --glass-bg: rgba(255, 255, 255, 0.06);
-        --glass-border: rgba(255, 255, 255, 0.12);
-    }
+/* Prevent body scroll when color selector is open on mobile */
+body.color-selector-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-    
-    .droplet,
-    .water-layer,
-    .cursor-trail,
-    .burst-particle,
-    .showroom-particle {
-        animation: none !important;
-    }
+/* Ensure all images maintain aspect ratio */
+.product-image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%; /* 4:3 aspect ratio */
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.product-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image-container img {
+    transform: scale(1.05);
 }

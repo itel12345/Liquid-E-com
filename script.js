@@ -2667,18 +2667,21 @@
             console.log('• Time travel button (top-left)');
         });
         // ============================================
-// RESPONSIVE FEATURES
+// COMPLETE RESPONSIVE FIXES
 // ============================================
 
-// Mobile Navigation
+// 1. MOBILE NAVIGATION
 function initMobileNavigation() {
+    // Create hamburger menu
     const hamburger = document.createElement('div');
     hamburger.className = 'hamburger-menu';
     hamburger.innerHTML = '<span></span><span></span><span></span>';
     
     // Add hamburger to nav
     const navIcons = document.querySelector('.nav-icons');
-    navIcons.parentNode.insertBefore(hamburger, navIcons);
+    if (navIcons) {
+        navIcons.parentNode.insertBefore(hamburger, navIcons);
+    }
     
     // Create mobile menu overlay
     const mobileOverlay = document.createElement('div');
@@ -2693,6 +2696,8 @@ function initMobileNavigation() {
     navItems.forEach(item => {
         const clone = item.cloneNode(true);
         clone.className = 'mobile-nav-item';
+        // Remove active class for mobile
+        clone.classList.remove('active');
         mobileMenu.appendChild(clone);
     });
     
@@ -2732,7 +2737,8 @@ function initMobileNavigation() {
     
     // Close mobile menu when clicking item
     mobileMenu.addEventListener('click', function(e) {
-        if (e.target.closest('.mobile-nav-item')) {
+        const navItem = e.target.closest('.mobile-nav-item');
+        if (navItem) {
             mobileOverlay.classList.remove('active');
             hamburger.classList.remove('active');
             document.body.style.overflow = '';
@@ -2741,25 +2747,51 @@ function initMobileNavigation() {
             document.querySelectorAll('.mobile-nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            e.target.closest('.mobile-nav-item').classList.add('active');
+            navItem.classList.add('active');
+            
+            // Also update desktop nav
+            const index = Array.from(mobileMenu.children).indexOf(navItem);
+            if (navItems[index]) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                navItems[index].classList.add('active');
+            }
         }
     });
     
     // Mobile cart button
-    document.getElementById('mobileCartButton').addEventListener('click', function() {
-        openCart();
-        mobileOverlay.classList.remove('active');
-        hamburger.classList.remove('active');
-        document.body.style.overflow = '';
-    });
+    const mobileCartBtn = document.getElementById('mobileCartButton');
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function() {
+            openCart();
+            mobileOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
     
     // Mobile color button
-    document.getElementById('mobileColorButton').addEventListener('click', function() {
-        document.getElementById('colorSelector').classList.toggle('active');
-        mobileOverlay.classList.remove('active');
-        hamburger.classList.remove('active');
-        document.body.style.overflow = '';
-    });
+    const mobileColorBtn = document.getElementById('mobileColorButton');
+    if (mobileColorBtn) {
+        mobileColorBtn.addEventListener('click', function() {
+            const colorSelector = document.getElementById('colorSelector');
+            colorSelector.classList.toggle('active');
+            
+            // Prevent body scroll when color selector is open on mobile
+            if (window.innerWidth <= 768) {
+                if (colorSelector.classList.contains('active')) {
+                    document.body.classList.add('color-selector-open');
+                } else {
+                    document.body.classList.remove('color-selector-open');
+                }
+            }
+            
+            mobileOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
     
     // Close menu on escape key
     document.addEventListener('keydown', function(e) {
@@ -2771,42 +2803,151 @@ function initMobileNavigation() {
     });
 }
 
-// Touch-friendly color selector
-function makeColorSelectorTouchFriendly() {
-    const colorOptions = document.querySelectorAll('.color-option');
-    colorOptions.forEach(option => {
-        option.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.style.transform = 'scale(0.95)';
-        }, { passive: false });
+// 2. FIX COLOR SELECTOR FOR MOBILE
+function fixMobileColorSelector() {
+    const colorSelector = document.getElementById('colorSelector');
+    const colorButton = document.getElementById('colorButton');
+    const mobileColorButton = document.getElementById('mobileColorButton');
+    const colorControl = document.getElementById('colorControl');
+    
+    // Function to toggle color selector
+    function toggleColorSelector() {
+        colorSelector.classList.toggle('active');
         
-        option.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            this.style.transform = 'scale(1)';
-            this.click();
-        }, { passive: false });
+        // On mobile, prevent background scrolling when selector is open
+        if (window.innerWidth <= 768) {
+            if (colorSelector.classList.contains('active')) {
+                document.body.classList.add('color-selector-open');
+            } else {
+                document.body.classList.remove('color-selector-open');
+            }
+        }
+    }
+    
+    // Add click events to all color buttons
+    if (colorButton) {
+        colorButton.addEventListener('click', toggleColorSelector);
+    }
+    
+    if (mobileColorButton) {
+        // Already set up in mobile navigation
+    }
+    
+    if (colorControl) {
+        colorControl.addEventListener('click', toggleColorSelector);
+    }
+    
+    // Close color selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const isColorButton = e.target.closest('#colorButton') || 
+                             e.target.closest('#mobileColorButton') ||
+                             e.target.closest('#colorControl') ||
+                             e.target.closest('.color-option');
+        
+        if (!colorSelector.contains(e.target) && !isColorButton && colorSelector.classList.contains('active')) {
+            colorSelector.classList.remove('active');
+            document.body.classList.remove('color-selector-open');
+        }
+    });
+    
+    // Make color options touch-friendly
+    document.querySelectorAll('.color-option').forEach(option => {
+        option.style.cursor = 'pointer';
+        option.style.webkitTapHighlightColor = 'transparent';
+        
+        // Add touch feedback for mobile
+        if ('ontouchstart' in window) {
+            option.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            }, { passive: true });
+            
+            option.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            }, { passive: true });
+        }
+    });
+    
+    // Update color selection to work better on mobile
+    document.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', function(e) {
+            // Remove active class from all options
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Add active class to clicked option
+            this.classList.add('active');
+            
+            const color = this.dataset.color;
+            const name = this.dataset.name;
+            const rgb = this.dataset.rgb;
+            
+            if (color === 'rainbow') {
+                startRainbowEffect();
+            } else if (color === 'gradient') {
+                startGradientEffect();
+            } else {
+                stopColorEffects();
+                setThemeColor(color, rgb, name);
+            }
+            
+            // On mobile, close the selector after a short delay
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    colorSelector.classList.remove('active');
+                    document.body.classList.remove('color-selector-open');
+                }, 800);
+            }
+        });
     });
 }
 
-// Responsive product card adjustments
-function adjustProductCardsForMobile() {
-    const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach(card => {
-        // Make sure cards are touch-friendly
-        card.style.cursor = 'pointer';
+// 3. MAKE ALL IMAGES RESPONSIVE
+function makeAllImagesResponsive() {
+    // Process all product images
+    document.querySelectorAll('.product-image').forEach(img => {
+        // Add lazy loading
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+        }
         
-        // Add touch feedback
-        card.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.98)';
-        });
+        // Ensure responsive attributes
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.maxWidth = '100%';
         
-        card.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
-        });
+        // Handle image load errors
+        img.onerror = function() {
+            console.log('Image failed to load:', this.src);
+            // Fallback image
+            this.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+            this.alt = 'Product image not available';
+        };
+    });
+    
+    // Process all other images
+    document.querySelectorAll('img:not(.product-image)').forEach(img => {
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+        }
+        
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+    });
+    
+    // Create image containers for product cards if they don't exist
+    document.querySelectorAll('.product-card').forEach(card => {
+        const img = card.querySelector('.product-image');
+        if (img && !img.parentElement.classList.contains('product-image-container')) {
+            const container = document.createElement('div');
+            container.className = 'product-image-container';
+            img.parentNode.insertBefore(container, img);
+            container.appendChild(img);
+        }
     });
 }
 
-// Handle viewport resize
+// 4. HANDLE VIEWPORT RESIZE
 function handleViewportResize() {
     const isMobile = window.innerWidth <= 768;
     
@@ -2822,14 +2963,59 @@ function handleViewportResize() {
     } else {
         document.documentElement.style.setProperty('--font-scale', '1');
     }
+    
+    // Update image sizes based on viewport
+    document.querySelectorAll('.product-image').forEach(img => {
+        if (isMobile) {
+            img.style.height = 'auto';
+        }
+    });
 }
 
-// Initialize all responsive features
-function initResponsiveFeatures() {
-    initMobileNavigation();
-    makeColorSelectorTouchFriendly();
-    adjustProductCardsForMobile();
-    handleViewportResize();
+// 5. TOUCH-FRIENDLY INTERACTIONS
+function makeTouchFriendly() {
+    // Increase touch target sizes for mobile
+    if ('ontouchstart' in window) {
+        document.querySelectorAll('.add-to-cart, .ar-preview-btn, .control-btn, .floating-btn').forEach(btn => {
+            btn.style.minWidth = '44px';
+            btn.style.minHeight = '44px';
+        });
+        
+        // Add touch feedback
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    }
+}
+
+// 6. INITIALIZE ALL RESPONSIVE FEATURES
+function initAllResponsiveFeatures() {
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                initMobileNavigation();
+                fixMobileColorSelector();
+                makeAllImagesResponsive();
+                makeTouchFriendly();
+                handleViewportResize();
+            }, 100);
+        });
+    } else {
+        setTimeout(() => {
+            initMobileNavigation();
+            fixMobileColorSelector();
+            makeAllImagesResponsive();
+            makeTouchFriendly();
+            handleViewportResize();
+        }, 100);
+    }
     
     // Listen for resize events
     window.addEventListener('resize', handleViewportResize);
@@ -2837,36 +3023,74 @@ function initResponsiveFeatures() {
     // Listen for orientation changes
     window.addEventListener('orientationchange', function() {
         setTimeout(handleViewportResize, 100);
+        setTimeout(makeAllImagesResponsive, 200);
     });
+    
+    // Initial call to set up responsive features
+    setTimeout(() => {
+        makeAllImagesResponsive();
+        handleViewportResize();
+    }, 500);
 }
 
-// Call this in your existing DOMContentLoaded event
-document.addEventListener('DOMContentLoaded', function() {
-    // Your existing initialization code...
+// 7. UPDATE EXISTING FUNCTIONS FOR RESPONSIVENESS
+// Update your existing setThemeColor function to work on mobile
+function setThemeColor(color, rgb, name) {
+    const root = document.documentElement;
     
-    // Add responsive features initialization
-    initResponsiveFeatures();
+    // Set primary color
+    root.style.setProperty('--primary-color', color);
+    if (rgb) {
+        root.style.setProperty('--primary-rgb', rgb);
+    }
+    
+    // Update droplets with new color
+    document.querySelectorAll('.droplet').forEach(droplet => {
+        droplet.style.background = `radial-gradient(circle at 30% 30%, ${color}, ${color}80, transparent 70%)`;
+    });
+    
+    // Update cart count color
+    document.querySelectorAll('.cart-count').forEach(count => {
+        count.style.background = color;
+    });
+    
+    console.log(`Theme color changed to: ${name} (${color})`);
+}
+
+// Update your existing openCart function for mobile
+const originalOpenCart = openCart;
+openCart = function() {
+    originalOpenCart();
+    
+    // On mobile, close mobile menu if open
+    if (window.innerWidth <= 768) {
+        const mobileOverlay = document.getElementById('mobileMenuOverlay');
+        const hamburger = document.querySelector('.hamburger-menu');
+        if (mobileOverlay && mobileOverlay.classList.contains('active')) {
+            mobileOverlay.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+};
+
+// Initialize everything when the page loads
+window.addEventListener('load', function() {
+    // Initialize responsive features
+    initAllResponsiveFeatures();
+    
+    // Make sure images load properly
+    setTimeout(makeAllImagesResponsive, 1000);
+    
+    // Update cart count on load
+    updateCartDisplay();
 });
 
-// Add to your existing setupEventListeners function
-// Make sure color selector works on mobile
-function setupEnhancedColorSelector() {
-    // Close color selector when touching outside
-    document.addEventListener('touchstart', function(e) {
-        const colorSelector = document.getElementById('colorSelector');
-        const colorButton = document.getElementById('colorButton');
-        const colorControl = document.getElementById('colorControl');
-        const mobileColorButton = document.getElementById('mobileColorButton');
-        
-        if (colorSelector.classList.contains('active') &&
-            !colorSelector.contains(e.target) &&
-            !colorButton?.contains(e.target) &&
-            !colorControl?.contains(e.target) &&
-            !mobileColorButton?.contains(e.target)) {
-            colorSelector.classList.remove('active');
-        }
+// Also call on DOMContentLoaded for faster initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        initAllResponsiveFeatures();
     });
+} else {
+    initAllResponsiveFeatures();
 }
-
-// Update your existing setupEventListeners function to include:
-setupEnhancedColorSelector();
