@@ -3094,3 +3094,417 @@ if (document.readyState === 'loading') {
 } else {
     initAllResponsiveFeatures();
 }
+// ============================================
+// ENHANCED SOUND EFFECTS SYSTEM
+// ============================================
+
+let currentSoundMode = 'ambient'; // ambient, liquid, tech, none
+let isSoundEnabled = false;
+let currentVolume = 0.5;
+let audioElements = {};
+
+// Initialize Enhanced Sound System
+function initEnhancedSoundSystem() {
+    // Create audio elements if they don't exist in HTML
+    createAudioElements();
+    
+    // Setup sound toggle
+    setupSoundToggle();
+    
+    // Setup sound mode selector
+    setupSoundModeSelector();
+    
+    // Setup volume control
+    setupVolumeControl();
+    
+    // Setup sound effects for interactions
+    setupInteractionSounds();
+    
+    // Load saved preferences
+    loadSoundPreferences();
+}
+
+function createAudioElements() {
+    const soundTypes = [
+        { id: 'ambientSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-ambience-loop-156.mp3' },
+        { id: 'liquidFlowSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-water-flow-loop-103.mp3' },
+        { id: 'techSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-futuristic-technology-loop-121.mp3' },
+        { id: 'hologramSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-hologram-open-1167.mp3' },
+        { id: 'cartAddSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-electronic-retro-block-hit-2185.mp3' },
+        { id: 'selectionSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-tech-drop-3278.mp3' },
+        { id: 'clickSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3' },
+        { id: 'successSound', src: 'https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3' }
+    ];
+    
+    soundTypes.forEach(sound => {
+        let audio = document.getElementById(sound.id);
+        if (!audio) {
+            audio = document.createElement('audio');
+            audio.id = sound.id;
+            audio.preload = 'auto';
+            
+            const source = document.createElement('source');
+            source.src = sound.src;
+            source.type = 'audio/mpeg';
+            audio.appendChild(source);
+            
+            document.body.appendChild(audio);
+        }
+        
+        audio.volume = currentVolume;
+        audioElements[sound.id] = audio;
+    });
+}
+
+function setupSoundToggle() {
+    const soundToggle = document.getElementById('soundToggle');
+    
+    // Create sound mode selector if it doesn't exist
+    if (!document.getElementById('soundModeSelector')) {
+        const selector = document.createElement('div');
+        selector.id = 'soundModeSelector';
+        selector.className = 'sound-mode-selector';
+        selector.innerHTML = `
+            <div class="sound-mode-title">SOUND MODE</div>
+            <div class="sound-mode-option active" data-mode="ambient">
+                <i class="fas fa-space-shuttle"></i>
+                <span>Ambient Space</span>
+            </div>
+            <div class="sound-mode-option" data-mode="liquid">
+                <i class="fas fa-tint"></i>
+                <span>Liquid Flow</span>
+            </div>
+            <div class="sound-mode-option" data-mode="tech">
+                <i class="fas fa-microchip"></i>
+                <span>Tech Hub</span>
+            </div>
+            <div class="sound-mode-option" data-mode="none">
+                <i class="fas fa-volume-mute"></i>
+                <span>Muted</span>
+            </div>
+            <div class="volume-slider-container">
+                <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+            </div>
+        `;
+        document.body.appendChild(selector);
+    }
+    
+    soundToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        if (!isSoundEnabled) {
+            // Turn sound on
+            enableSound();
+            playSound('clickSound');
+            
+            // Show mode selector
+            setTimeout(() => {
+                document.getElementById('soundModeSelector').classList.add('active');
+            }, 300);
+        } else {
+            // Turn sound off
+            disableSound();
+            playSound('clickSound');
+            
+            // Hide mode selector
+            document.getElementById('soundModeSelector').classList.remove('active');
+        }
+    });
+    
+    // Toggle mode selector on long press
+    let pressTimer;
+    soundToggle.addEventListener('touchstart', function(e) {
+        pressTimer = setTimeout(() => {
+            document.getElementById('soundModeSelector').classList.toggle('active');
+            playSound('selectionSound');
+        }, 500);
+    }, { passive: true });
+    
+    soundToggle.addEventListener('touchend', function() {
+        clearTimeout(pressTimer);
+    }, { passive: true });
+}
+
+function setupSoundModeSelector() {
+    const selector = document.getElementById('soundModeSelector');
+    const options = selector.querySelectorAll('.sound-mode-option');
+    
+    options.forEach(option => {
+        option.addEventListener('click', function() {
+            const mode = this.dataset.mode;
+            
+            // Update active state
+            options.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Change sound mode
+            changeSoundMode(mode);
+            playSound('selectionSound');
+            
+            // Auto-hide selector on mobile after selection
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    selector.classList.remove('active');
+                }, 1000);
+            }
+        });
+    });
+    
+    // Close selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const soundToggle = document.getElementById('soundToggle');
+        const selector = document.getElementById('soundModeSelector');
+        
+        if (!soundToggle.contains(e.target) && !selector.contains(e.target)) {
+            selector.classList.remove('active');
+        }
+    });
+}
+
+function setupVolumeControl() {
+    const volumeSlider = document.getElementById('volumeSlider');
+    
+    volumeSlider.addEventListener('input', function() {
+        currentVolume = this.value / 100;
+        
+        // Update all audio elements volume
+        Object.values(audioElements).forEach(audio => {
+            audio.volume = currentVolume;
+        });
+        
+        // Save volume preference
+        saveSoundPreferences();
+        
+        // Play volume adjustment sound
+        if (isSoundEnabled && audioElements.clickSound) {
+            audioElements.clickSound.currentTime = 0;
+            audioElements.clickSound.play().catch(e => console.log("Audio play failed:", e));
+        }
+    });
+}
+
+function setupInteractionSounds() {
+    // Add to cart sound
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.add-to-cart') && isSoundEnabled) {
+            playSound('cartAddSound');
+        }
+    });
+    
+    // Color selection sound
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.color-option') && isSoundEnabled) {
+            playSound('selectionSound');
+        }
+    });
+    
+    // Navigation sound
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.nav-item') && isSoundEnabled) {
+            playSound('clickSound');
+        }
+    });
+    
+    // AR preview sound
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.ar-preview-btn') && isSoundEnabled) {
+            playSound('hologramSound');
+        }
+    });
+    
+    // Checkout success sound
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function() {
+            if (isSoundEnabled && shoppingCart.length > 0) {
+                setTimeout(() => playSound('successSound'), 500);
+            }
+        });
+    }
+}
+
+function enableSound() {
+    isSoundEnabled = true;
+    const soundToggle = document.getElementById('soundToggle');
+    
+    // Update toggle appearance
+    soundToggle.classList.remove('muted');
+    soundToggle.classList.add('active');
+    soundToggle.querySelector('i').className = 'fas fa-volume-up';
+    
+    // Start ambient sound based on current mode
+    playAmbientSound();
+    
+    // Save preference
+    saveSoundPreferences();
+}
+
+function disableSound() {
+    isSoundEnabled = false;
+    const soundToggle = document.getElementById('soundToggle');
+    
+    // Update toggle appearance
+    soundToggle.classList.add('muted');
+    soundToggle.classList.remove('active');
+    soundToggle.querySelector('i').className = 'fas fa-volume-mute';
+    
+    // Stop all sounds
+    stopAllSounds();
+    
+    // Save preference
+    saveSoundPreferences();
+}
+
+function changeSoundMode(mode) {
+    currentSoundMode = mode;
+    
+    // Stop current ambient sound
+    stopAmbientSound();
+    
+    // Start new ambient sound if enabled
+    if (isSoundEnabled && mode !== 'none') {
+        playAmbientSound();
+    }
+    
+    // Save preference
+    saveSoundPreferences();
+}
+
+function playAmbientSound() {
+    stopAmbientSound(); // Stop any currently playing ambient sound
+    
+    let soundToPlay;
+    switch(currentSoundMode) {
+        case 'ambient':
+            soundToPlay = 'ambientSound';
+            break;
+        case 'liquid':
+            soundToPlay = 'liquidFlowSound';
+            break;
+        case 'tech':
+            soundToPlay = 'techSound';
+            break;
+        default:
+            return;
+    }
+    
+    if (audioElements[soundToPlay]) {
+        audioElements[soundToPlay].loop = true;
+        audioElements[soundToPlay].volume = currentVolume;
+        
+        // Try to play with user interaction requirement
+        const playPromise = audioElements[soundToPlay].play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Autoplay prevented:", error);
+                // Sound will play on next user interaction
+            });
+        }
+    }
+}
+
+function stopAmbientSound() {
+    ['ambientSound', 'liquidFlowSound', 'techSound'].forEach(soundId => {
+        if (audioElements[soundId]) {
+            audioElements[soundId].pause();
+            audioElements[soundId].currentTime = 0;
+        }
+    });
+}
+
+function playSound(soundId) {
+    if (!isSoundEnabled || !audioElements[soundId]) return;
+    
+    const sound = audioElements[soundId];
+    sound.currentTime = 0;
+    sound.volume = currentVolume;
+    
+    const playPromise = sound.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log("Sound play failed:", error);
+        });
+    }
+}
+
+function stopAllSounds() {
+    Object.values(audioElements).forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+}
+
+function saveSoundPreferences() {
+    const preferences = {
+        enabled: isSoundEnabled,
+        mode: currentSoundMode,
+        volume: currentVolume
+    };
+    
+    try {
+        localStorage.setItem('liquidGlassSoundPrefs', JSON.stringify(preferences));
+    } catch (e) {
+        console.log("Could not save sound preferences:", e);
+    }
+}
+
+function loadSoundPreferences() {
+    try {
+        const saved = localStorage.getItem('liquidGlassSoundPrefs');
+        if (saved) {
+            const preferences = JSON.parse(saved);
+            isSoundEnabled = preferences.enabled;
+            currentSoundMode = preferences.mode || 'ambient';
+            currentVolume = preferences.volume || 0.5;
+            
+            // Apply saved preferences
+            const volumeSlider = document.getElementById('volumeSlider');
+            if (volumeSlider) {
+                volumeSlider.value = currentVolume * 100;
+            }
+            
+            // Update UI
+            const soundToggle = document.getElementById('soundToggle');
+            const modeOptions = document.querySelectorAll('.sound-mode-option');
+            
+            if (isSoundEnabled) {
+                soundToggle.classList.remove('muted');
+                soundToggle.classList.add('active');
+                soundToggle.querySelector('i').className = 'fas fa-volume-up';
+                playAmbientSound();
+            } else {
+                soundToggle.classList.add('muted');
+                soundToggle.classList.remove('active');
+                soundToggle.querySelector('i').className = 'fas fa-volume-mute';
+            }
+            
+            // Update active mode
+            modeOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.mode === currentSoundMode) {
+                    option.classList.add('active');
+                }
+            });
+        }
+    } catch (e) {
+        console.log("Could not load sound preferences:", e);
+    }
+}
+
+// Initialize the enhanced sound system
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize after a short delay to ensure DOM is ready
+    setTimeout(initEnhancedSoundSystem, 1000);
+});
+
+// Also handle page visibility changes
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        // Pause sounds when tab is hidden
+        Object.values(audioElements).forEach(audio => audio.pause());
+    } else if (isSoundEnabled && document.visibilityState === 'visible') {
+        // Resume sounds when tab becomes visible
+        playAmbientSound();
+    }
+});

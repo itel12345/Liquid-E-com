@@ -4240,3 +4240,216 @@ body.color-selector-open {
 .product-card:hover .product-image-container img {
     transform: scale(1.05);
 }
+/* Enhanced Sound Toggle */
+.sound-toggle {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--neon-blue-rgb), 0.2);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--neon-blue);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.sound-toggle i {
+    font-size: 1.5rem;
+    color: var(--neon-blue);
+    margin-bottom: 5px;
+    transition: var(--transition-medium);
+}
+
+.sound-wave {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 15px;
+}
+
+.wave-bar {
+    width: 3px;
+    background: var(--neon-blue);
+    border-radius: 2px;
+    animation: wavePulse 1.2s infinite ease-in-out;
+}
+
+.wave-bar:nth-child(1) { height: 5px; animation-delay: 0s; }
+.wave-bar:nth-child(2) { height: 8px; animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { height: 11px; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { height: 8px; animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { height: 5px; animation-delay: 0.4s; }
+
+@keyframes wavePulse {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.5); }
+}
+
+.sound-toggle:hover {
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 0 30px var(--neon-blue);
+    transform: rotate(15deg);
+}
+
+.sound-toggle:hover i {
+    transform: scale(1.2);
+}
+
+.sound-toggle.active {
+    background: rgba(var(--neon-green-rgb), 0.3);
+    border-color: var(--neon-green);
+}
+
+.sound-toggle.active i {
+    color: var(--neon-green);
+}
+
+.sound-toggle.active .wave-bar {
+    background: var(--neon-green);
+}
+
+.sound-toggle.muted i {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.sound-toggle.muted .wave-bar {
+    animation: none;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sound Mode Selector */
+.sound-mode-selector {
+    position: fixed;
+    bottom: 180px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    width: 200px;
+    z-index: 1000;
+    transform: translateY(calc(100% + 40px));
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sound-mode-selector.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.sound-mode-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.sound-mode-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: var(--transition-medium);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.sound-mode-option:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+    transform: translateX(-3px);
+}
+
+.sound-mode-option.active {
+    background: rgba(var(--primary-rgb), 0.2);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.sound-mode-option i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Volume Slider */
+.volume-slider-container {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.volume-slider {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 10px 0;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* Responsive Sound Toggle */
+@media (max-width: 768px) {
+    .sound-toggle {
+        bottom: 120px;
+        right: 15px;
+        width: 55px;
+        height: 55px;
+    }
+    
+    .sound-toggle:hover {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .sound-mode-selector {
+        width: 180px;
+        bottom: 200px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sound-toggle {
+        bottom: 100px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .sound-toggle i {
+        font-size: 1.3rem;
+    }
+    
+    .sound-mode-selector {
+        width: 160px;
+    }
+}
