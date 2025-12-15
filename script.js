@@ -2666,3 +2666,207 @@
             console.log('• Double-click anywhere');
             console.log('• Time travel button (top-left)');
         });
+        // ============================================
+// RESPONSIVE FEATURES
+// ============================================
+
+// Mobile Navigation
+function initMobileNavigation() {
+    const hamburger = document.createElement('div');
+    hamburger.className = 'hamburger-menu';
+    hamburger.innerHTML = '<span></span><span></span><span></span>';
+    
+    // Add hamburger to nav
+    const navIcons = document.querySelector('.nav-icons');
+    navIcons.parentNode.insertBefore(hamburger, navIcons);
+    
+    // Create mobile menu overlay
+    const mobileOverlay = document.createElement('div');
+    mobileOverlay.className = 'mobile-menu-overlay';
+    mobileOverlay.id = 'mobileMenuOverlay';
+    
+    const mobileMenu = document.createElement('div');
+    mobileMenu.className = 'mobile-nav-menu';
+    
+    // Copy nav items to mobile menu
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        clone.className = 'mobile-nav-item';
+        mobileMenu.appendChild(clone);
+    });
+    
+    // Add mobile nav icons
+    const mobileIcons = document.createElement('div');
+    mobileIcons.className = 'mobile-nav-icons';
+    mobileIcons.innerHTML = `
+        <div class="nav-icon" id="mobileCartButton">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count">0</span>
+        </div>
+        <div class="nav-icon" id="mobileColorButton">
+            <i class="fas fa-palette"></i>
+        </div>
+    `;
+    
+    mobileMenu.appendChild(mobileIcons);
+    mobileOverlay.appendChild(mobileMenu);
+    document.body.appendChild(mobileOverlay);
+    
+    // Toggle mobile menu
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+        mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close mobile menu when clicking overlay
+    mobileOverlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close mobile menu when clicking item
+    mobileMenu.addEventListener('click', function(e) {
+        if (e.target.closest('.mobile-nav-item')) {
+            mobileOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Update active state
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            e.target.closest('.mobile-nav-item').classList.add('active');
+        }
+    });
+    
+    // Mobile cart button
+    document.getElementById('mobileCartButton').addEventListener('click', function() {
+        openCart();
+        mobileOverlay.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+    
+    // Mobile color button
+    document.getElementById('mobileColorButton').addEventListener('click', function() {
+        document.getElementById('colorSelector').classList.toggle('active');
+        mobileOverlay.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileOverlay.classList.contains('active')) {
+            mobileOverlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// Touch-friendly color selector
+function makeColorSelectorTouchFriendly() {
+    const colorOptions = document.querySelectorAll('.color-option');
+    colorOptions.forEach(option => {
+        option.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.style.transform = 'scale(0.95)';
+        }, { passive: false });
+        
+        option.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            this.style.transform = 'scale(1)';
+            this.click();
+        }, { passive: false });
+    });
+}
+
+// Responsive product card adjustments
+function adjustProductCardsForMobile() {
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        // Make sure cards are touch-friendly
+        card.style.cursor = 'pointer';
+        
+        // Add touch feedback
+        card.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+}
+
+// Handle viewport resize
+function handleViewportResize() {
+    const isMobile = window.innerWidth <= 768;
+    
+    // Hide/show elements based on screen size
+    const secretLab = document.querySelector('.secret-lab');
+    if (secretLab) {
+        secretLab.style.display = isMobile ? 'none' : 'flex';
+    }
+    
+    // Adjust font sizes for mobile
+    if (isMobile) {
+        document.documentElement.style.setProperty('--font-scale', '0.95');
+    } else {
+        document.documentElement.style.setProperty('--font-scale', '1');
+    }
+}
+
+// Initialize all responsive features
+function initResponsiveFeatures() {
+    initMobileNavigation();
+    makeColorSelectorTouchFriendly();
+    adjustProductCardsForMobile();
+    handleViewportResize();
+    
+    // Listen for resize events
+    window.addEventListener('resize', handleViewportResize);
+    
+    // Listen for orientation changes
+    window.addEventListener('orientationchange', function() {
+        setTimeout(handleViewportResize, 100);
+    });
+}
+
+// Call this in your existing DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing initialization code...
+    
+    // Add responsive features initialization
+    initResponsiveFeatures();
+});
+
+// Add to your existing setupEventListeners function
+// Make sure color selector works on mobile
+function setupEnhancedColorSelector() {
+    // Close color selector when touching outside
+    document.addEventListener('touchstart', function(e) {
+        const colorSelector = document.getElementById('colorSelector');
+        const colorButton = document.getElementById('colorButton');
+        const colorControl = document.getElementById('colorControl');
+        const mobileColorButton = document.getElementById('mobileColorButton');
+        
+        if (colorSelector.classList.contains('active') &&
+            !colorSelector.contains(e.target) &&
+            !colorButton?.contains(e.target) &&
+            !colorControl?.contains(e.target) &&
+            !mobileColorButton?.contains(e.target)) {
+            colorSelector.classList.remove('active');
+        }
+    });
+}
+
+// Update your existing setupEventListeners function to include:
+setupEnhancedColorSelector();
