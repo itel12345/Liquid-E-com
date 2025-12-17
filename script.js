@@ -731,10 +731,6 @@
                     </div>
                     
                     <div class="product-footer">
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
-                        <button class="add-to-cart" data-id="${product.id}">
-                            <i class="fas fa-plus"></i>
-                        </button>
                     </div>
                 `;
                 slider.appendChild(card);
